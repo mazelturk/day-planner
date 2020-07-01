@@ -18,6 +18,12 @@ import com.example.myapplication.db.TaskDbHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.example.myapplication.utils.DateUtils.formatDateForDb;
+import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_EQUALS;
 
 public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnFragmentInteractionListener{
     private static final String TAG = "MainActivity";
@@ -55,11 +61,13 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnF
     }
 
     private void updateUI() {
+        Date today = Calendar.getInstance().getTime();
+
         ArrayList<String> taskList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor = db.query(TaskContract.TaskEntry.TABLE,
                 new String[]{TaskContract.TaskEntry._ID, TaskContract.TaskEntry.COL_TASK_TITLE},
-                null, null, null, null, null);
+                WHERE_DATE_EQUALS, new String[] {formatDateForDb(today)}, null, null, null);
         while (cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(TaskContract.TaskEntry.COL_TASK_TITLE);
             taskList.add(cursor.getString(idx));

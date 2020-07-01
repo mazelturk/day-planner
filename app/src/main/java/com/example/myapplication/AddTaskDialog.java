@@ -26,6 +26,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.example.myapplication.utils.DateUtils.formatDate;
+import static com.example.myapplication.utils.DateUtils.formatDateForDb;
+
 public class AddTaskDialog extends AppCompatDialogFragment {
 
 
@@ -132,11 +135,6 @@ public class AddTaskDialog extends AppCompatDialogFragment {
         editText.setText(formatDate(myCalendar.getTime()));
     }
 
-    private String formatDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
-        return sdf.format(date);
-    }
-
     private void saveToDb() {
         String task = String.valueOf(taskTitle.getText());
         String date = String.valueOf(taskDate.getText());
@@ -148,8 +146,8 @@ public class AddTaskDialog extends AppCompatDialogFragment {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COL_TASK_TITLE, task);
-        values.put(TaskContract.TaskEntry.COL_DATE, date);
-        values.put(TaskContract.TaskEntry.COL_DEADLINE, deadline);
+        values.put(TaskContract.TaskEntry.COL_DATE, formatDateForDb(date));
+        values.put(TaskContract.TaskEntry.COL_DEADLINE, formatDateForDb(deadline));
         values.put(TaskContract.TaskEntry.COL_RECURRING, recurring);
         db.insertWithOnConflict(TaskContract.TaskEntry.TABLE,
                 null,
