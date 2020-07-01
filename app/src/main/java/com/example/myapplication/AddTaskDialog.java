@@ -46,12 +46,12 @@ public class AddTaskDialog extends AppCompatDialogFragment {
         Activity activity = getActivity();
         // Verify that the host activity implements the callback interface
         try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
+            // Instantiate the OnFragmentInteractionListener so we can send events to the host
             mCallback = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -128,7 +128,7 @@ public class AddTaskDialog extends AppCompatDialogFragment {
     }
 
     private void updateLabel(EditText editText) {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
 
         editText.setText(sdf.format(myCalendar.getTime()));
