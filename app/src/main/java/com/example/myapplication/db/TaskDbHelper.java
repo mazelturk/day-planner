@@ -4,8 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class TaskDbHelper extends SQLiteOpenHelper {
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
+public class TaskDbHelper extends SQLiteOpenHelper {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
+    Date currentTime = Calendar.getInstance().getTime();
     public TaskDbHelper(Context context) {
         super(context, TaskContract.DB_NAME, null, TaskContract.DB_VERSION);
     }

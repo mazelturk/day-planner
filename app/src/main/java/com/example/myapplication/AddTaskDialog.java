@@ -23,6 +23,7 @@ import com.example.myapplication.db.TaskDbHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class AddTaskDialog extends AppCompatDialogFragment {
@@ -128,15 +129,20 @@ public class AddTaskDialog extends AppCompatDialogFragment {
     }
 
     private void updateLabel(EditText editText) {
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+        editText.setText(formatDate(myCalendar.getTime()));
+    }
 
-        editText.setText(sdf.format(myCalendar.getTime()));
+    private String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.UK);
+        return sdf.format(date);
     }
 
     private void saveToDb() {
         String task = String.valueOf(taskTitle.getText());
         String date = String.valueOf(taskDate.getText());
+        if (date.isEmpty() || date.length() < 2) {
+            date = formatDate(Calendar.getInstance().getTime());
+        }
         String deadline = String.valueOf(taskDeadline.getText());
         Integer recurring = taskIsRecurring.isChecked() ? 1 : 0;
         SQLiteDatabase db = mHelper.getWritableDatabase();
