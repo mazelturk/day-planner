@@ -11,7 +11,8 @@ public class TaskContract {
 
         public static final String COL_TASK_TITLE = "title";
         public static final String COL_RECURRING = "recurring";
-        public static final String COL_TIME_LIMIT = "time limit";
+        public static final String COL_DEADLINE = "deadline";
         public static final String COL_PRIORITY = "priority";
+        public static final String COL_DATE = "date";
     }
 }
