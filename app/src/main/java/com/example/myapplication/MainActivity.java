@@ -24,13 +24,16 @@ import java.util.Date;
 
 import static com.example.myapplication.utils.DateUtils.formatDateForDb;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_EQUALS;
+import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_Is_GT_TODAY_AND_NOT_RECURRING;
 
 public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnFragmentInteractionListener{
     private static final String TAG = "MainActivity";
 
     private TaskDbHelper mHelper;
     private ListView mTaskListView;
+    private ListView mTaskDatesListView;
     private ArrayAdapter<String> mAdapter;
+    private ArrayAdapter<String> mAdapter2;
 
 
     @Override
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnF
 
         mHelper = new TaskDbHelper(this);
         mTaskListView = findViewById(R.id.list_todo);
+        mTaskDatesListView = findViewById(R.id.future_tasks);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,6 +87,38 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnF
             mAdapter.clear();
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
+        }
+
+        cursor.close();
+        db.close();
+
+        getOutstandingDates();
+    }
+
+    private void getOutstandingDates() {
+        Date today = Calendar.getInstance().getTime();
+
+        ArrayList<String> dateList = new ArrayList<>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+        Cursor cursor = db.query(TaskContract.TaskEntry.TABLE,
+                new String[]{TaskContract.TaskEntry._ID, TaskContract.TaskEntry.COL_DATE},
+                WHERE_DATE_Is_GT_TODAY_AND_NOT_RECURRING, new String[] {formatDateForDb(today)}, null, null, null);
+        while (cursor.moveToNext()) {
+            int idx = cursor.getColumnIndex(TaskContract.TaskEntry.COL_DATE);
+            dateList.add(cursor.getString(idx));
+        }
+
+
+        if (mAdapter2 == null) {
+            mAdapter2 = new ArrayAdapter<>(this,
+                    R.layout.item_date,
+                    R.id.item_date,
+                    dateList);
+            mTaskDatesListView.setAdapter(mAdapter2);
+        } else {
+            mAdapter2.clear();
+            mAdapter2.addAll(dateList);
+            mAdapter2.notifyDataSetChanged();
         }
 
         cursor.close();
