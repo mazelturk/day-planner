@@ -31,7 +31,7 @@ public class DateUtils {
         return sdf.format(date);
     }
 
-    public static Date formatDbDate(String date) {
+    public static Date parseDbDate(String date) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(date);
         } catch (ParseException e) {
@@ -44,7 +44,8 @@ public class DateUtils {
         String day = new SimpleDateFormat("d").format(d);
         String dayOfWeek = new SimpleDateFormat("EEEE").format(d);
         String monthName = new SimpleDateFormat("MMMM").format(d);
-        return dayOfWeek + " " + day + " " + monthName;
+        String year = new SimpleDateFormat("yy").format(d);
+        return dayOfWeek + " " + day + " " + monthName +" " + year;
     }
 
 }

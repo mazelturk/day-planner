@@ -18,10 +18,7 @@ import com.example.myapplication.db.TaskDbHelper;
 import com.example.myapplication.utils.DateUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -29,7 +26,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.myapplication.utils.DateUtils.formatDateForDb;
-import static com.example.myapplication.utils.DateUtils.formatDateWithWeekday;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_EQUALS;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_Is_GT_TODAY_AND_NOT_RECURRING;
 
@@ -117,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnF
 
         List<String> weekDates = dateList.stream()
                 .distinct()
-                .map(DateUtils::formatDbDate)
-                .sorted(Comparator.reverseOrder())
+                .map(DateUtils::parseDbDate)
+                .sorted()
                 .map(DateUtils::formatDateWithWeekday)
                 .collect(Collectors.toList());
 
@@ -130,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnF
             mTaskDatesListView.setAdapter(mAdapter2);
         } else {
             mAdapter2.clear();
-            mAdapter2.addAll(dateList);
+            mAdapter2.addAll(weekDates);
             mAdapter2.notifyDataSetChanged();
         }
 
