@@ -15,14 +15,21 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.myapplication.db.TaskContract;
 import com.example.myapplication.db.TaskDbHelper;
+import com.example.myapplication.utils.DateUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.myapplication.utils.DateUtils.formatDateForDb;
+import static com.example.myapplication.utils.DateUtils.formatDateWithWeekday;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_EQUALS;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_Is_GT_TODAY_AND_NOT_RECURRING;
 
@@ -108,12 +115,18 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnF
             dateList.add(cursor.getString(idx));
         }
 
+        List<String> weekDates = dateList.stream()
+                .distinct()
+                .map(DateUtils::formatDbDate)
+                .sorted(Comparator.reverseOrder())
+                .map(DateUtils::formatDateWithWeekday)
+                .collect(Collectors.toList());
 
         if (mAdapter2 == null) {
             mAdapter2 = new ArrayAdapter<>(this,
                     R.layout.item_date,
                     R.id.item_date,
-                    dateList);
+                    weekDates);
             mTaskDatesListView.setAdapter(mAdapter2);
         } else {
             mAdapter2.clear();
