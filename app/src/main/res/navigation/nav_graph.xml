@@ -14,6 +14,10 @@
         <action
             android:id="@+id/actionFirstFragmentToFuture"
             app:destination="@id/FutureTaskFragment" />
+        <argument
+            android:name="taskDate"
+            app:argType="string"
+            android:defaultValue="bleh"/>
     </fragment>
     <fragment
         android:id="@+id/FutureTaskFragment"

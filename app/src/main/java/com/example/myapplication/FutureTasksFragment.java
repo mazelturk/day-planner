@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,15 @@ public class FutureTasksFragment extends Fragment {
     private ListView mTaskListView;
     private ArrayAdapter<String> mAdapter;
     private TaskDbHelper mHelper;
+
+    private TextView date;
+
+//    private View.OnClickListener dateOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            dateClicked();
+//        }
+//    };
 
     @Override
     public View onCreateView(

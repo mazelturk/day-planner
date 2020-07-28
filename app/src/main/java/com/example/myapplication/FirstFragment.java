@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.example.myapplication.db.TaskContract;
 import com.example.myapplication.db.TaskDbHelper;
@@ -142,6 +145,13 @@ public class FirstFragment extends Fragment {
                     R.id.item_date,
                     weekDates);
             mTaskDatesListView.setAdapter(mAdapter2);
+            mTaskDatesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    NavDirections action = FirstFragmentDirections.actionFirstFragmentToFuture().setTaskDate("");
+                    Navigation.findNavController(view).navigate(action);
+                }
+            });
         } else {
             mAdapter2.clear();
             mAdapter2.addAll(weekDates);
