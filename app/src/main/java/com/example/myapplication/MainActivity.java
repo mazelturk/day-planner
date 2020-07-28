@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnTaskAddedListener {
@@ -29,6 +31,18 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnT
 
     }
 
+    public void moveToFuture(View view) {
+        NavDirections action = FirstFragmentDirections.actionFirstFragmentToFuture();
+        Navigation.findNavController(view).navigate(action);
+
+    }
+
+    public void moveToCurrent(View view) {
+        NavDirections action = FutureTasksFragmentDirections.actionFutureToMainFragment();
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

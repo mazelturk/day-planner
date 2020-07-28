@@ -12,12 +12,12 @@
         tools:layout="@layout/first_fragment">
 
         <action
-            android:id="@+id/main2Future"
+            android:id="@+id/actionFirstFragmentToFuture"
             app:destination="@id/FutureTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/FutureTaskFragment"
-        android:name="com.example.myapplication.FutureTasksActivity"
+        android:name="com.example.myapplication.FutureTasksFragment"
         android:label="FutureFragment"
         tools:layout="@layout/future_task">
 
