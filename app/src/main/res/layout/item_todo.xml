@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:visibility="visible"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    tools:context=".FirstFragment">
 
     <TextView
         android:id="@+id/task_title"

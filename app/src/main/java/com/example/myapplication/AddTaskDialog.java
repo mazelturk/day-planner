@@ -21,10 +21,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.myapplication.db.TaskContract;
 import com.example.myapplication.db.TaskDbHelper;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import static com.example.myapplication.utils.DateUtils.formatDate;
 import static com.example.myapplication.utils.DateUtils.formatDateForDb;
@@ -32,17 +29,21 @@ import static com.example.myapplication.utils.DateUtils.formatDateForDb;
 public class AddTaskDialog extends AppCompatDialogFragment {
 
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
+    public interface OnTaskAddedListener {
+        void onTaskAdd();
     }
 
-    private OnFragmentInteractionListener mCallback;
+    private OnTaskAddedListener mCallback;
     private TaskDbHelper mHelper;
     private EditText taskTitle;
     private EditText taskDate;
     private Switch taskIsRecurring;
     private EditText taskDeadline;
     private final Calendar myCalendar = Calendar.getInstance();
+
+    public void setOnTaskAddedListener(OnTaskAddedListener mCallback) {
+        this.mCallback = mCallback;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -51,7 +52,7 @@ public class AddTaskDialog extends AppCompatDialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the OnFragmentInteractionListener so we can send events to the host
-            mCallback = (OnFragmentInteractionListener) activity;
+            mCallback = (OnTaskAddedListener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
@@ -75,7 +76,7 @@ public class AddTaskDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         saveToDb();
-                        mCallback.onFragmentInteraction();
+                        mCallback.onTaskAdd();
                     }
                 });
 
