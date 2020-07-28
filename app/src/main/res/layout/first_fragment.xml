@@ -7,10 +7,13 @@
     android:id="@+id/firstFragment"
     tools:context=".FirstFragment">
 
+    <include layout="@layout/task_list" />
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        android:id="@+id/nav_view"
         >
 
         <androidx.appcompat.widget.Toolbar
@@ -29,8 +32,5 @@
             android:layout_marginTop="64dp"
             />
     </com.google.android.material.navigation.NavigationView>
-
-    <include layout="@layout/task_list" />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

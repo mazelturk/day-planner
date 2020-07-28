@@ -45,6 +45,7 @@ public class FirstFragment extends Fragment {
     private ArrayAdapter<String> mAdapter;
     private ArrayAdapter<String> mAdapter2;
 
+
     Date focusDate = Calendar.getInstance().getTime();
 
     @Override
@@ -61,6 +62,12 @@ public class FirstFragment extends Fragment {
         mHelper = new TaskDbHelper(getContext());
         mTaskListView = view.findViewById(R.id.list_todo);
         mTaskDatesListView = view.findViewById(R.id.future_tasks);
+        mTaskDatesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                navigate(view);
+            }
+        });
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -74,6 +81,11 @@ public class FirstFragment extends Fragment {
                 openDialog();
             }
         });
+    }
+
+    private void navigate(View view) {
+        NavDirections action = FirstFragmentDirections.actionFirstFragmentToFuture().setTaskDate("");
+        Navigation.findNavController(view).navigate(action);
     }
 
     @Override
@@ -145,13 +157,7 @@ public class FirstFragment extends Fragment {
                     R.id.item_date,
                     weekDates);
             mTaskDatesListView.setAdapter(mAdapter2);
-            mTaskDatesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    NavDirections action = FirstFragmentDirections.actionFirstFragmentToFuture().setTaskDate("");
-                    Navigation.findNavController(view).navigate(action);
-                }
-            });
+
         } else {
             mAdapter2.clear();
             mAdapter2.addAll(weekDates);
