@@ -36,7 +36,7 @@ import static com.example.myapplication.utils.DateUtils.parseDbDate;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_EQUALS;
 import static com.example.myapplication.utils.SqliteUtils.WHERE_DATE_Is_GT_TODAY_AND_NOT_RECURRING;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements TaskFragment {
     private static final String TAG = "FirstFragment";
 
     private TaskDbHelper mHelper;
@@ -65,7 +65,8 @@ public class FirstFragment extends Fragment {
         mTaskDatesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                navigate(view);
+                String date = ((TextView)view.findViewById(R.id.item_date)).getText().toString();
+                navigate(view, date);
             }
         });
 
@@ -83,8 +84,8 @@ public class FirstFragment extends Fragment {
         });
     }
 
-    private void navigate(View view) {
-        NavDirections action = FirstFragmentDirections.actionFirstFragmentToFuture().setTaskDate("");
+    private void navigate(View view, String date) {
+        NavDirections action = FirstFragmentDirections.actionFirstFragmentToFuture().setTaskDate(date);
         Navigation.findNavController(view).navigate(action);
     }
 
@@ -168,6 +169,7 @@ public class FirstFragment extends Fragment {
         db.close();
     }
 
+    @Override
     public void deleteTask(View view) {
         View parent = (View) view.getParent();
         TextView taskTextView = parent.findViewById(R.id.task_title);

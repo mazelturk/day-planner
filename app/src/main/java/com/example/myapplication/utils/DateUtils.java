@@ -2,8 +2,6 @@ package com.example.myapplication.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -29,6 +27,21 @@ public class DateUtils {
     public static String formatDateForDb(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
         return sdf.format(date);
+    }
+
+    public static Date parseLongDate(String date) {
+        String[] splitDate = date.split(" ");
+        if (splitDate.length == 4) {
+            String day = splitDate[1];
+            String month = splitDate[2];
+            String year = splitDate[3];
+            try {
+                return new SimpleDateFormat("dd-MMMM-yy").parse(day +"-"+month+"-"+year);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return new Date(Long.MAX_VALUE);
     }
 
     public static Date parseDbDate(String date) {

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.OnT
 
     public void deleteTask(View view) {
         //TODO: delete shit code
-        FirstFragment fragment = (FirstFragment)getSupportFragmentManager().getPrimaryNavigationFragment().getChildFragmentManager().getFragments().get(0);
+        TaskFragment fragment = (TaskFragment) getSupportFragmentManager().getPrimaryNavigationFragment().getChildFragmentManager().getFragments().get(0);
         fragment.deleteTask(view);
 
     }
