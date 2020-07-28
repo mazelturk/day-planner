@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/firstFragment"
     tools:context=".FirstFragment">
 
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/future_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="Upcoming tasks" />
+
+        <ListView
+            android:id="@+id/future_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="625dp"
+            android:layout_marginTop="64dp"
+            />
+    </com.google.android.material.navigation.NavigationView>
 
     <include layout="@layout/task_list" />
-    <include layout="@layout/date_list" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

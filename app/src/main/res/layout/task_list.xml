@@ -5,12 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <!--    <include-->
-    <!--        android:id="@+id/SlidingPanel"-->
-    <!--        layout="@layout/sliding_panel">-->
-    <!--    </include>-->
-
+    tools:context=".FirstFragment">
 
 
     <ListView
@@ -24,7 +19,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
